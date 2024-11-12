@@ -7,8 +7,8 @@ public class Knight extends Figure {
 
     @Override
     public boolean canMove(int row, int col, int row1, int col1) {
-        if (!super.canMove(row, col, row1, col1)) return false;
-        return (Math.abs(row - row1) == 2 && Math.abs(col - col1) == 1) ||
-                (Math.abs(row - row1) == 1 && Math.abs(col - col1) == 2);
+        int dx = Math.abs(row - row1);
+        int dy = Math.abs(col - col1);
+        return dx * dy == 2;
     }
 }

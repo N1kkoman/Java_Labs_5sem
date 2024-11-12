@@ -7,7 +7,6 @@ public class Bishop extends Figure {
 
     @Override
     public boolean canMove(int row, int col, int row1, int col1) {
-        if (!super.canMove(row, col, row1, col1)) return false;
         return Math.abs(row - row1) == Math.abs(col - col1);
     }
 }
