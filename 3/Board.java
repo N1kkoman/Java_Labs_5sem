@@ -4,6 +4,10 @@ public class Board {
     private char colorGame;
     private Figure[][] fields = new Figure[8][8];
 
+    public Board() {
+        this.colorGame = 'w'; // Начальный цвет
+    }
+
     public void setColorGame(char colorGame) {
         this.colorGame = colorGame;
     }
@@ -43,7 +47,7 @@ public class Board {
         return " " + figure.getColor() + figure.getName() + " ";
     }
 
-    public void print_board() {
+    public void printBoard() {
         System.out.println(" +----+----+----+----+----+----+----+----+");
         for (int row = 7; row >= 0; row--) {
             System.out.print(row);
@@ -56,8 +60,9 @@ public class Board {
         System.out.println("    0    1    2    3    4    5    6    7 ");
     }
 
-    public boolean move_figure(int row, int col, int row1, int col1) {
+    public boolean moveFigure(int row, int col, int row1, int col1) {
         Figure figure = fields[row][col];
+
         // Проверяем, существует ли фигура и правильный ли цвет
         if (figure == null || figure.getColor() != colorGame) return false;
 
@@ -107,16 +112,16 @@ public class Board {
                 if (figure != null && figure.getColor() != kingColor) {
                     if (figure.canMove(row, col, kingRow, kingCol) &&
                             isPathClear(row, col, kingRow, kingCol)) {
-                        return true;
+                        return true; // Король под шахом
                     }
                 }
             }
         }
-        return false;
+        return false; // Король не под шахом
     }
 
     public boolean isMate(char kingColor) {
-        if (!isCheck(kingColor)) return false;
+        if (!isCheck(kingColor)) return false; // Если не шах, то не мат
 
         // Проверяем все возможные ходы всех фигур
         for (int row = 0; row < 8; row++) {
@@ -132,6 +137,7 @@ public class Board {
                                 continue;
                             }
 
+                            // Проверяем возможность хода
                             if (figure.canMove(row, col, newRow, newCol) &&
                                     isPathClear(row, col, newRow, newCol)) {
 
@@ -147,14 +153,14 @@ public class Board {
                                 fields[newRow][newCol] = target;
 
                                 // Если нашёлся ход, спасающий от шаха
-                                if (!stillInCheck) return false;
+                                if (!stillInCheck) return false; // Если есть ход, значит не мат
                             }
                         }
                     }
                 }
             }
         }
-        return true;
+        return true; // Если нет доступных ходов, это мат
     }
 
     private boolean isPathClear(int row, int col, int row1, int col1) {
@@ -168,10 +174,10 @@ public class Board {
         int currCol = col + deltaCol;
 
         while (currRow != row1 || currCol != col1) {
-            if (fields[currRow][currCol] != null) return false;
+            if (fields[currRow][currCol] != null) return false; // Путь заблокирован
             currRow += deltaRow;
             currCol += deltaCol;
         }
-        return true;
+        return true; // Путь свободен
     }
 }

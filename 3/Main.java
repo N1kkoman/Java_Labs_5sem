@@ -10,7 +10,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
 
         while (isGame) {
-            board.print_board();
+            board.printBoard();
             System.out.println();
 
             System.out.println("Управление:");
@@ -43,7 +43,7 @@ public class Main {
                     continue;
                 }
 
-                if (!board.move_figure(row, col, row1, col1)) {
+                if (!board.moveFigure(row, col, row1, col1)) {
                     System.out.println("Ошибка! Невозможный ход!");
                     continue;
                 }
